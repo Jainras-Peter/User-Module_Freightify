@@ -6,6 +6,9 @@ import { UserModal } from '../user-modal/user-modal';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { LucideAngularModule, SlidersHorizontal, Eye, Pencil, Trash ,Search} from 'lucide-angular';
+import { DeleteConfirm} from '../../Notification/delete-confirm/delete-confirm';
+import { SuccessAlert } from '../../Notification/success-alert/success-alert';
+
 
 declare var bootstrap: any; 
 
@@ -16,7 +19,12 @@ declare var bootstrap: any;
               ReactiveFormsModule,
               UserModal,ButtonModule,
               LucideAngularModule,
-              TableModule],
+              TableModule,
+              DeleteConfirm,
+              SuccessAlert
+
+              
+  ],
   standalone:true,
   templateUrl: './users-list.html',
   styleUrl: './users-list.css',
@@ -49,6 +57,8 @@ declare var bootstrap: any;
   //success msg
   successMessage = '';
   showSuccessAlert = false;
+  // delete confirmation 
+  showDeleteModal = false;
  
   
   constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
@@ -184,7 +194,7 @@ filterRoles(): User[] {
       this.cdr.detectChanges();
     });
   }
-  //Raido Type- filter
+//Raido Type- filter
   onTypeChange(type: string) {
     this.selectedType = type;
     this.userService.getUsersType(this.selectedType).subscribe((data)=>{
@@ -193,7 +203,7 @@ filterRoles(): User[] {
     }) 
   }
 
-  //Radio Status-filter
+//Radio Status-filter
   onStatusChange(status :boolean){
     this.selectedStatus=status
 
@@ -203,7 +213,7 @@ filterRoles(): User[] {
     })
 
   }
- //User-modal 
+//User-modal 
   openCreate() {
     this.selectedUser = null;
     this.modalMode = 'create';
@@ -222,7 +232,7 @@ filterRoles(): User[] {
     this.showModal = true;
   }
 
-  //Msg helpers
+//Success msg helpers
   showAlert(message: string) {
   this.successMessage = message;
   this.showSuccessAlert = true;
@@ -238,7 +248,7 @@ filterRoles(): User[] {
  }
 
   
-  //Event from child class while close the form
+//Event from child class(user-modal) while close the form
   onModalClose(event: { refresh: boolean; user?: User }) {
     this.showModal = false;
 
@@ -253,23 +263,26 @@ filterRoles(): User[] {
     this.cdr.detectChanges();
   }
 
-  //delete
+  //Delete confirmation
   openDeleteModal(user: User) {
     this.selectedUser = user;
-    const modalEl = document.getElementById('deleteConfirmModal');
-    this.deleteModal = new bootstrap.Modal(modalEl);
-    this.deleteModal.show();
+    this.showDeleteModal = true;
   }
+
+  cancelDelete() {
+    this.showDeleteModal = false;
+    this.selectedUser = null;
+  }
+
   confirmDelete() {
     if (!this.selectedUser || !this.selectedUser.id) return;
+
     this.userService.deleteUser(this.selectedUser.id).subscribe(() => {
+      this.showDeleteModal = false;
       this.selectedUser = null;
-      
+      this.showAlert('User deleted successfully!');
       this.load();
       this.cdr.detectChanges();
     });
   }
-
-  
 }
-
