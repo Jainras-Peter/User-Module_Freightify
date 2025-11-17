@@ -1,0 +1,35 @@
+/* Make navbar slim */
+.p-menubar {
+  padding: 0.3rem 1rem !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove background highlight */
+.p-menubar-root-list > .p-menuitem > .p-menuitem-content {
+  background: transparent !important;
+}
+
+/* Text styling (like screenshot) */
+.p-menuitem-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Hover underline effect */
+.p-menuitem-content:hover {
+  background: transparent !important;
+  border-bottom: 2px solid #3b82f6 !important;
+}
+
+/* Active link underline */
+.p-menuitem-active > .p-menuitem-content {
+  border-bottom: 2px solid #3b82f6 !important;
+}
+
+/* Right section spacing */
+.p-menubar-end button,
+.p-menubar-end .p-avatar {
+  margin-left: 1rem;
+}

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-success-alert',
-  imports: [CommonModule],
+  imports: [CommonModule,ToastModule],
   templateUrl: './success-alert.html',
   styleUrl: './success-alert.css',
 })
