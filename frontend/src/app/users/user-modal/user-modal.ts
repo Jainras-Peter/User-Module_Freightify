@@ -55,6 +55,7 @@ confirmPassword: string = '';
 showPassword: boolean = false;
 showConfirmPassword: boolean = false;
 passwordMismatch: boolean = false;
+passwordFocused: boolean = false;
 
 PasswordVisibility() {
   this.showPassword = !this.showPassword;

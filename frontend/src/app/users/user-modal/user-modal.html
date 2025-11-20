@@ -100,6 +100,8 @@
                     placeholder="Enter password"
                       [(ngModel)]="password"
                       (input)="validatePassword()"
+                      (focus)="passwordFocused = true"
+                      (blur)="passwordFocused = false"
 
                   
                   />
@@ -118,7 +120,7 @@
 
                  <!-- Validation checklist -->
 
-                      <div class="mt-2 text-sm">
+                      <div class="mt-2 text-sm "*ngIf="passwordFocused">
                         <p>Password must contain the following:</p>
                         <ul class="ml-4 mt-1">
                           <li
