@@ -100,6 +100,8 @@
                     placeholder="Enter password"
                       [(ngModel)]="password"
                       (input)="validatePassword()"
+                      (focus)="passwordFocused = true"
+                      (blur)="passwordFocused = false"
 
                   
                   />
@@ -118,7 +120,7 @@
 
                  <!-- Validation checklist -->
 
-                      <div class="mt-2 text-sm">
+                      <div class="mt-2 text-sm" *ngIf="passwordFocused">
                         <p>Password must contain the following:</p>
                         <ul class="ml-4 mt-1">
                           <li
@@ -204,11 +206,14 @@
          </div>
             
           
-          <!-- submit Bottons -->
+          <!-- submit Bottons  -->
           
           <div class="mt-4 text-end">
             <button type="button" class="btn btn-outline-secondary me-2" (click)="cancel()">Cancel</button>
-            <button type="submit" class="bg-lime-400 hover:bg-lime-500 text-black px-4 py-2 rounded-lg shadow-md transitio">
+            <button pRipple 
+            class="bg-lime-400 hover:bg-lime-500 text-black px-4 py-2 rounded-lg shadow-md transitio"
+            type="submit"
+              severity="success">
               {{ mode === 'view' ? 'Close' : 'Submit' }}
             </button>
           </div>
