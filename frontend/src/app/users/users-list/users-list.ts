@@ -8,6 +8,7 @@ import { TableModule } from 'primeng/table';
 import { LucideAngularModule, SlidersHorizontal, Eye, Pencil, Trash ,Search} from 'lucide-angular';
 import { DeleteConfirm} from '../../Notification/delete-confirm/delete-confirm';
 import { SuccessAlert } from '../../Notification/success-alert/success-alert';
+import 
 
 
 declare var bootstrap: any; 
@@ -59,6 +60,36 @@ declare var bootstrap: any;
   showSuccessAlert = false;
   // delete confirmation 
   showDeleteModal = false;
+
+  //Pagination
+  currentPage = 1;
+pageSize = 10;
+
+get paginatedUsers() {
+  const start = (this.currentPage - 1) * this.pageSize;
+  const end = start + this.pageSize;
+  return this.users.slice(start, end);
+}
+
+get totalPages() {
+  return Math.ceil(this.users.length / this.pageSize);
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+}
+
+goToPage(page: number) {
+  this.currentPage = page;
+}
  
   
   constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
@@ -189,9 +220,10 @@ filterRoles(): User[] {
   }
 
   load() {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = [...data];
-      this.cdr.detectChanges();
+     this.userService.getUsers().subscribe((data) => {
+    this.users = [...data];
+    this.currentPage = 1;
+    this.cdr.detectChanges();
     });
   }
 //Raido Type- filter

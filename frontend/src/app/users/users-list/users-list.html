@@ -270,7 +270,7 @@
        <!-- Table -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
             <p-table
-            [value]="users"
+            [value]="paginatedUsers"
             sortMode="multiple"
             [tableStyle]="{ 'min-width': '60rem' }"
             class="w-full"
@@ -355,6 +355,52 @@
                 </p-table>
             
             </div>
+
+            <!-- Pagination -->
+<div class="flex justify-between items-center px-4 py-3 bg-white border-t">
+    
+  <!-- Showing info -->
+  <div class="text-gray-600 text-sm">
+    Showing
+    {{ (currentPage - 1) * pageSize + 1 }}
+    –
+    {{ Math.min(currentPage * pageSize, users.length) }}
+    of {{ users.length }} entries
+  </div>
+
+  <!-- Prev / Next buttons -->
+  <div class="flex items-center gap-2">
+    <!-- Prev -->
+    <button
+      class="px-3 py-1 border rounded-md text-sm"
+      [disabled]="currentPage === 1"
+      (click)="prevPage()"
+    >
+      Previous
+    </button>
+
+    <!-- Page Numbers -->
+    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+      <button
+        class="px-3 py-1 border rounded-md text-sm"
+        [ngClass]="{ 'bg-blue-500 text-white': currentPage === i + 1 }"
+        (click)="goToPage(i + 1)"
+      >
+        {{ i + 1 }}
+      </button>
+    </ng-container>
+
+    <!-- Next -->
+    <button
+      class="px-3 py-1 border rounded-md text-sm"
+      [disabled]="currentPage === totalPages"
+      (click)="nextPage()"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
 
     </div>
   </div>
